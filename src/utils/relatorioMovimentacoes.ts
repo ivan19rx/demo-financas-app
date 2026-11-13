@@ -1,0 +1,281 @@
+// Gera um relatório de movimentações (estilo planilha) e dispara a impressão
+// (salvar como PDF) — sem dependências. O escopo define o conteúdo:
+//   ENTRADA → só entradas (compras)   SAIDA → só saídas (vendas)   GERAL → ambos.
+
+import { moeda, parseDataLocal } from './format'
+import { emCentavos, somaReais, percentuaisInteiros } from './numero'
+import { UNIDADE_LABEL, type UnidadeMedida } from './unidades'
+
+export interface RelatorioMovimento {
+  tipo: 'ENTRADA' | 'SAIDA'
+  data: string                 // yyyy-mm-dd
+  total: number
+  qtd: number | null
+  unidade: UnidadeMedida | null
+  produtoNome: string
+  clienteNome: string
+}
+
+export interface RelatorioMovContexto {
+  escopo: 'ENTRADA' | 'SAIDA' | 'GERAL'
+  clienteEntradas?: string
+  produtoSaidas?: string
+  busca?: string
+}
+
+interface Grupo { nome: string; total: number }
+interface GrupoProduto { nome: string; total: number; qtd: number; unidade: UnidadeMedida | null }
+
+const MESES = [
+  'JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO',
+  'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO',
+]
+
+const brNum = (n: number) => n.toLocaleString('pt-BR', { maximumFractionDigits: 2 })
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+function esc(s: string): string {
+  return s.replace(/[&<>"]/g, c => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string
+  ))
+}
+
+// Somas em centavos (total e quantidade têm 2 casas) e convertidas no fim.
+function agruparPorProduto(movs: RelatorioMovimento[], tipo: 'ENTRADA' | 'SAIDA'): GrupoProduto[] {
+  const map = new Map<string, GrupoProduto>()
+  for (const m of movs) {
+    if (m.tipo !== tipo) continue
+    const nome = m.produtoNome || '—'
+    const g = map.get(nome) ?? { nome, total: 0, qtd: 0, unidade: m.unidade }
+    g.total += emCentavos(m.total)
+    g.qtd += emCentavos(m.qtd)
+    if (!g.unidade) g.unidade = m.unidade
+    map.set(nome, g)
+  }
+  return [...map.values()]
+    .map(g => ({ ...g, total: g.total / 100, qtd: g.qtd / 100 }))
+    .sort((a, b) => b.total - a.total)
+}
+
+function agruparPorCliente(movs: RelatorioMovimento[], tipo: 'ENTRADA' | 'SAIDA'): Grupo[] {
+  const map = new Map<string, number>()
+  for (const m of movs) {
+    if (m.tipo !== tipo) continue
+    const nome = m.clienteNome || '—'
+    map.set(nome, (map.get(nome) ?? 0) + emCentavos(m.total))
+  }
+  return [...map.entries()]
+    .map(([nome, centavos]) => ({ nome, total: centavos / 100 }))
+    .sort((a, b) => b.total - a.total)
+}
+
+function periodoLabel(movs: RelatorioMovimento[]): string {
+  if (!movs.length) return ''
+  let min = movs[0].data
+  let max = movs[0].data
+  for (const m of movs) {
+    if (m.data < min) min = m.data
+    if (m.data > max) max = m.data
+  }
+  const di = parseDataLocal(min)
+  const df = parseDataLocal(max)
+  if (di.getMonth() === df.getMonth() && di.getFullYear() === df.getFullYear()) {
+    return `${MESES[di.getMonth()]} ${di.getFullYear()}`
+  }
+  const f = (d: Date) =>
+    `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`
+  return `${f(di)} A ${f(df)}`
+}
+
+function metaLinha(ctx: RelatorioMovContexto): string {
+  const partes: string[] = []
+  if (ctx.escopo !== 'SAIDA' && ctx.clienteEntradas) partes.push(`Cliente/Fornecedor: <b>${esc(ctx.clienteEntradas)}</b>`)
+  if (ctx.escopo !== 'ENTRADA' && ctx.produtoSaidas) partes.push(`Produto: <b>${esc(ctx.produtoSaidas)}</b>`)
+  if (ctx.busca) partes.push(`Busca: <b>${esc(ctx.busca)}</b>`)
+  if (!partes.length) partes.push('Sem filtros aplicados')
+  const agora = new Date().toLocaleString('pt-BR', {
+    day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
+  })
+  return `${partes.join(' &nbsp;·&nbsp; ')} &nbsp;·&nbsp; Gerado em <b>${agora}</b>`
+}
+
+// ── Construtores de linhas/tabelas ─────────────────────────────────────────────
+
+function qtdTexto(qtd: number, unidade: UnidadeMedida | null): string {
+  if (!qtd) return '—'
+  return `${brNum(qtd)}${unidade ? ' ' + UNIDADE_LABEL[unidade] : ''}`
+}
+
+// Percentuais pelo maior resto: a coluna sempre fecha em 100%.
+function linhasProduto(grupos: GrupoProduto[]): string {
+  if (!grupos.length) return '<tr><td class="empty" colspan="4">—</td></tr>'
+  const pcts = percentuaisInteiros(grupos.map(g => g.total))
+  return grupos
+    .map((g, i) => `<tr><td class="lbl">${esc(g.nome)}</td><td class="qtd">${qtdTexto(g.qtd, g.unidade)}</td><td class="val">${moeda(g.total)}</td><td class="pct">${pcts[i]}%</td></tr>`)
+    .join('')
+}
+
+function linhasCliente(grupos: Grupo[]): string {
+  if (!grupos.length) return '<tr><td class="empty" colspan="3">—</td></tr>'
+  const pcts = percentuaisInteiros(grupos.map(g => g.total))
+  return grupos
+    .map((g, i) => `<tr><td class="lbl">${esc(g.nome)}</td><td class="val">${moeda(g.total)}</td><td class="pct">${pcts[i]}%</td></tr>`)
+    .join('')
+}
+
+function tabelaProduto(titulo: string, cls: string, grupos: GrupoProduto[], total: number): string {
+  return `<table>
+    <tr><td class="shead ${cls}" colspan="4">${esc(titulo)}</td></tr>
+    <tr class="colhdr"><td class="lbl">Produto</td><td class="qtd">Qtd</td><td class="val">Total</td><td class="pct">%</td></tr>
+    ${linhasProduto(grupos)}
+    <tr class="total"><td class="lbl" colspan="2">TOTAL</td><td class="val">${moeda(total)}</td><td class="pct">${total > 0 ? '100%' : '0%'}</td></tr>
+  </table>`
+}
+
+function tabelaCliente(titulo: string, cls: string, grupos: Grupo[], total: number): string {
+  return `<table>
+    <tr><td class="shead ${cls}" colspan="3">${esc(titulo)}</td></tr>
+    <tr class="colhdr"><td class="lbl">Cliente/Fornecedor</td><td class="val">Total</td><td class="pct">%</td></tr>
+    ${linhasCliente(grupos)}
+    <tr class="total"><td class="lbl">TOTAL</td><td class="val">${moeda(total)}</td><td class="pct">${total > 0 ? '100%' : '0%'}</td></tr>
+  </table>`
+}
+
+// ── Geração ────────────────────────────────────────────────────────────────────
+
+// Regras de estilo das tabelas do resumo. `p` é o prefixo de escopo: '' no
+// documento próprio ou '.resumo-mov ' quando embutido como anexo abaixo de um
+// espelho, evitando colisão com os estilos do espelho.
+function regrasMov(p: string): string {
+  return `
+  ${p}.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+  ${p}.col { display: flex; flex-direction: column; gap: 16px; }
+  ${p}.solo { max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+  ${p}table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  ${p}td { border: 1px solid #cfcfcf; padding: 4px 8px; }
+  ${p}.shead { color: #fff; font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: .03em; }
+  ${p}.shead.ent { background: #C0392B; border-color: #C0392B; }
+  ${p}.shead.sai { background: #1E8449; border-color: #1E8449; }
+  ${p}tr.colhdr td { background: #ececec; font-weight: 700; color: #555; }
+  ${p}.lbl { text-align: left; }
+  ${p}.qtd { text-align: right; white-space: nowrap; color: #555; }
+  ${p}.val { text-align: right; white-space: nowrap; }
+  ${p}.pct { text-align: right; width: 46px; color: #555; }
+  ${p}.empty { text-align: center; color: #999; }
+  ${p}tr.total td { background: #eee; font-weight: 700; }
+  ${p}table.result .rhead { background: #2f6f4f; color: #fff; font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: .03em; border-color: #2f6f4f; }
+  ${p}tr.saldo td { font-weight: 700; }
+  ${p}tr.saldo.pos td { background: #84BE43; color: #1a3a10; }
+  ${p}tr.saldo.neg td { background: #E4574C; color: #fff; }
+  ${p}.nota { font-size: 9px; color: #777; line-height: 1.5; margin-top: 2px; }`
+}
+
+// Monta o título e o corpo (tabelas) do Resumo de Movimentações.
+function construirMov(movimentos: RelatorioMovimento[], escopo: RelatorioMovContexto['escopo']): { titulo: string; corpo: string } {
+  const entradasProduto = agruparPorProduto(movimentos, 'ENTRADA')
+  const entradasCliente = agruparPorCliente(movimentos, 'ENTRADA')
+  const saidasProduto = agruparPorProduto(movimentos, 'SAIDA')
+  const saidasCliente = agruparPorCliente(movimentos, 'SAIDA')
+
+  const totalEntradas = somaReais(movimentos.filter(m => m.tipo === 'ENTRADA'), m => m.total)
+  const totalSaidas = somaReais(movimentos.filter(m => m.tipo === 'SAIDA'), m => m.total)
+  const resultado = totalSaidas - totalEntradas
+  const positivo = resultado >= 0
+
+  const periodo = periodoLabel(movimentos)
+  const tituloBase =
+    escopo === 'ENTRADA' ? 'RESUMO DE ENTRADAS (COMPRAS)'
+      : escopo === 'SAIDA' ? 'RESUMO DE SAÍDAS (VENDAS)'
+        : 'RESUMO DE MOVIMENTAÇÕES'
+  const titulo = `${tituloBase}${periodo ? ` — ${periodo}` : ''}`
+
+  const tblEntProduto = tabelaProduto('Entradas por Produto (Compras)', 'ent', entradasProduto, totalEntradas)
+  const tblEntCliente = tabelaCliente('Entradas por Cliente/Fornecedor', 'ent', entradasCliente, totalEntradas)
+  const tblSaiProduto = tabelaProduto('Saídas por Produto (Vendas)', 'sai', saidasProduto, totalSaidas)
+  const tblSaiCliente = tabelaCliente('Saídas por Cliente/Fornecedor', 'sai', saidasCliente, totalSaidas)
+
+  const tblResultado = `<table class="result">
+    <tr><td class="rhead" colspan="2">Resultado Financeiro</td></tr>
+    <tr><td class="lbl">ENTRADAS (COMPRAS)</td><td class="val">${moeda(totalEntradas)}</td></tr>
+    <tr><td class="lbl">SAÍDAS (VENDAS)</td><td class="val">${moeda(totalSaidas)}</td></tr>
+    <tr class="saldo ${positivo ? 'pos' : 'neg'}">
+      <td class="lbl">${positivo ? 'POSITIVO' : 'NEGATIVO'}</td>
+      <td class="val">${moeda(resultado)}</td>
+    </tr>
+  </table>`
+
+  let corpo: string
+  if (escopo === 'ENTRADA') {
+    corpo = `<div class="solo">${tblEntProduto}${tblEntCliente}</div>`
+  } else if (escopo === 'SAIDA') {
+    corpo = `<div class="solo">${tblSaiProduto}${tblSaiCliente}</div>`
+  } else {
+    corpo = `<div class="grid">
+      <div class="col">${tblEntProduto}${tblEntCliente}${tblResultado}
+        <div class="nota">Entradas são compras/recebimentos de mercadoria; saídas são vendas. O resultado é o valor das vendas menos o das compras no período.</div>
+      </div>
+      <div class="col">${tblSaiProduto}${tblSaiCliente}</div>
+    </div>`
+  }
+
+  return { titulo, corpo }
+}
+
+// Fragmento do Resumo de Movimentações para embutir ABAIXO de um espelho. Os
+// estilos são escopados em .resumo-mov para não colidir com os do espelho.
+export function montarResumoMovimentacoesAnexo(
+  movimentos: RelatorioMovimento[],
+  contexto: RelatorioMovContexto,
+): string {
+  const { titulo, corpo } = construirMov(movimentos, contexto.escopo)
+  return `<style>
+  .resumo-mov { margin-top: 28px; }
+  .resumo-mov .rc-title { background: #404040; color: #fff; font-weight: 700; font-size: 14px; text-align: center; padding: 10px; letter-spacing: .04em; margin-bottom: 14px; }
+  ${regrasMov('.resumo-mov ')}
+  .resumo-mov tbody tr:last-child td { border-bottom: 1px solid #cfcfcf; }
+</style>
+<section class="resumo-mov"><div class="rc-title">${esc(titulo)}</div>${corpo}</section>`
+}
+
+export function gerarRelatorioMovimentacoes(
+  movimentos: RelatorioMovimento[],
+  contexto: RelatorioMovContexto,
+): void {
+  const { titulo, corpo } = construirMov(movimentos, contexto.escopo)
+
+  const html = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>${esc(titulo)}</title>
+<style>
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; padding: 24px; font-family: Arial, Helvetica, sans-serif; color: #1a1a1a; background: #fff; font-variant-numeric: tabular-nums; }
+  .report { max-width: 860px; margin: 0 auto; }
+  .title { background: #404040; color: #fff; font-weight: 700; font-size: 15px; text-align: center; padding: 10px; letter-spacing: .04em; }
+  .meta { font-size: 10px; color: #555; padding: 8px 2px 16px; line-height: 1.6; }
+  ${regrasMov('')}
+  @media print { body { padding: 0; } .report { max-width: none; } }
+  @page { margin: 14mm; }
+</style>
+</head>
+<body>
+  <div class="report">
+    <div class="title">${esc(titulo)}</div>
+    <div class="meta">${metaLinha(contexto)}</div>
+    ${corpo}
+  </div>
+  <script>window.onload = function () { window.focus(); window.print(); }</script>
+</body>
+</html>`
+
+  const win = window.open('', '_blank')
+  if (!win) {
+    alert('Não foi possível abrir a janela do relatório. Permita pop-ups para este site e tente novamente.')
+    return
+  }
+  win.document.open()
+  win.document.write(html)
+  win.document.close()
+}
