@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { MarcaLateral } from './Logo'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { C } from '../theme'
 import { useAuth } from '../auth/useAuth'
@@ -271,19 +272,9 @@ export function Sidebar({ open, onClose }: SidebarProps) {
       transition: 'transform 0.3s ease',
     }}>
 
-      {/* Logo banner full-width + botão fechar */}
+      {/* Marca da demonstração + botão fechar */}
       <div style={{ position: 'relative', flexShrink: 0 }}>
-        <img
-          src="/logo.svg"
-          alt="Logo SL"
-          style={{
-            width: '100%',
-            height: 140,
-            objectFit: 'cover',
-            objectPosition: 'center',
-            display: 'block',
-          }}
-        />
+        <MarcaLateral />
         {/* Só em tablet/celular (< 1024px, mesmo limite do fundo escuro do
             Layout). No computador a barra lateral fica sempre aberta.
             O display vem das classes (flex / lg:hidden): um display inline
@@ -351,10 +342,10 @@ export function Sidebar({ open, onClose }: SidebarProps) {
               onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = C.hoverItem}
               onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
             >
-              <svg style={{ width: 20, height: 20, flexShrink: 0 }} fill="none" stroke="#DC2626" strokeWidth="1.8" viewBox="0 0 24 24">
+              <svg style={{ width: 20, height: 20, flexShrink: 0 }} fill="none" stroke="#F87171" strokeWidth="1.8" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>
-              <span style={{ fontSize: 14, fontWeight: 500, color: '#DC2626' }}>Sair</span>
+              <span style={{ fontSize: 14, fontWeight: 500, color: '#F87171' }}>Sair</span>
             </button>
           </>
         )}

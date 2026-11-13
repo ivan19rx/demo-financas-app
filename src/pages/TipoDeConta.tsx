@@ -60,7 +60,7 @@ function TipoContaForm({ form, errors, serverError, submitting, onChange, onSubm
         <button
           onClick={onCancel}
           disabled={submitting}
-          style={{ padding: '8px 18px', borderRadius: 8, border: '1px solid #E2EBE7', background: '#fff', color: '#4B7A6A', fontSize: 14, cursor: 'pointer', fontWeight: 500 }}
+          style={{ padding: '8px 18px', borderRadius: 8, border: '1px solid #24352F', background: '#121D1A', color: '#8FB3A4', fontSize: 14, cursor: 'pointer', fontWeight: 500 }}
         >
           Cancelar
         </button>

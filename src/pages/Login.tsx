@@ -98,7 +98,7 @@ export default function Login() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: `radial-gradient(1200px 600px at 50% -10%, #0B5A55 0%, ${C.sidebarBg} 55%, #00302F 100%)`,
+      background: `radial-gradient(1200px 600px at 50% -10%, #17352D 0%, #0F1F1B 45%, #0B1412 100%)`,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',

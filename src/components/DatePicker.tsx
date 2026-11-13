@@ -15,15 +15,15 @@ const DIAS_SEMANA = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
 const DIAS_SEMANA_LONGOS = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado']
 
 const COR = {
-  borda: '#E2EBE7',
-  texto: '#1A2E25',
-  textoSuave: '#557063',
-  foraDoMes: '#A7BDB3',
-  hover: '#EEF3F1',
-  intervalo: '#E3F1EA',
+  borda: '#24352F',
+  texto: '#E4EEE9',
+  textoSuave: '#93AEA2',
+  foraDoMes: '#6F8B80',
+  hover: '#0B1412',
+  intervalo: '#183128',
   selecionado: C.sidebarBg,
   hoje: C.activeIcon,
-  erro: '#DC2626',
+  erro: '#F87171',
 }
 
 // ── Datas sem fuso horário ──────────────────────────────────────────────────
@@ -80,12 +80,12 @@ function textoParaIso(texto: string): string | null {
 // ── Estilos de hover/foco ──────────────────────────────────────────────────
 // Ficam em CSS (e não inline) porque :hover não existe em style={{}}. Os
 // !important vencem os estilos inline de base de cada botão.
-const HOVER_DIA = '#D3EBDF'
+const HOVER_DIA = '#1D3A2F'
 const ESTILO = `
   @keyframes dpEntrar { from { opacity: 0; transform: translateY(-4px) } to { opacity: 1; transform: translateY(0) } }
 
   .dp-campo { transition: border-color 0.15s, background 0.15s, box-shadow 0.15s; }
-  .dp-campo:not([data-estado]):hover { border-color: ${C.navIcon} !important; background: #FFFFFF !important; }
+  .dp-campo:not([data-estado]):hover { border-color: ${C.navIcon} !important; background: #121D1A !important; }
   .dp-campo[data-estado="ativo"] { box-shadow: 0 0 0 3px rgba(126, 200, 164, 0.18); }
   .dp-icone { transition: background 0.15s, color 0.15s; }
   .dp-wrap:hover .dp-icone { color: ${C.sidebarBg} !important; }
@@ -238,7 +238,7 @@ export function DatePicker({
           width: '100%', boxSizing: 'border-box',
           padding: filtro ? '8px 38px 8px 12px' : '9px 38px 9px 12px',
           borderRadius: 8, border: `1px solid ${corBorda}`,
-          fontSize: 14, color: COR.texto, background: '#F9FAFB',
+          fontSize: 14, color: COR.texto, background: '#17241F',
           outline: 'none',
           fontVariantNumeric: 'tabular-nums',
         }}
@@ -384,7 +384,7 @@ function Calendario({ id, ancora, popRef, value, min, max, intervalo, focarAoAbr
       onMouseDown={e => { if ((e.target as HTMLElement).tagName !== 'BUTTON') e.preventDefault() }}
       style={{
         position: 'fixed', top: pos?.top ?? -9999, left: pos?.left ?? -9999, zIndex: 300,
-        width: LARGURA, background: '#fff', borderRadius: 12,
+        width: LARGURA, background: '#121D1A', borderRadius: 12,
         border: `1px solid ${COR.borda}`, overflow: 'hidden',
         boxShadow: '0 12px 32px rgba(0, 65, 71, 0.18), 0 2px 6px rgba(0,0,0,0.06)',
         animation: 'dpEntrar 0.12s ease',
@@ -463,7 +463,7 @@ function Calendario({ id, ancora, popRef, value, min, max, intervalo, focarAoAbr
                           borderRadius: 8, fontSize: 13,
                           fontWeight: sel || ehHoje ? 700 : doMes ? 500 : 400,
                           fontVariantNumeric: 'tabular-nums',
-                          background: sel ? COR.selecionado : (pontaIni || pontaFim) && noIntervalo ? '#C9E5D7' : 'transparent',
+                          background: sel ? COR.selecionado : (pontaIni || pontaFim) && noIntervalo ? '#24463A' : 'transparent',
                           color: sel ? '#FFFFFF' : doMes ? COR.texto : COR.foraDoMes,
                           cursor: off ? 'not-allowed' : 'pointer',
                           opacity: off ? 0.35 : 1,
@@ -490,7 +490,7 @@ function Calendario({ id, ancora, popRef, value, min, max, intervalo, focarAoAbr
                 style={{
                   padding: '12px 0', borderRadius: 8, fontSize: 13, textTransform: 'capitalize',
                   border: atual ? 'none' : `1px solid ${COR.borda}`,
-                  background: atual ? COR.selecionado : '#fff',
+                  background: atual ? COR.selecionado : '#121D1A',
                   color: atual ? '#fff' : COR.texto, fontWeight: atual ? 700 : 500,
                   cursor: off ? 'not-allowed' : 'pointer', opacity: off ? 0.35 : 1,
                 }}>{nome}</button>
@@ -507,7 +507,7 @@ function Calendario({ id, ancora, popRef, value, min, max, intervalo, focarAoAbr
         </button>
         <button type="button" className="dp-rodape" disabled={desabilitado(paraIso(hj))}
           onClick={() => onEscolher(paraIso(hj))}
-          style={{ ...botaoRodape, color: C.sidebarBg, fontWeight: 600, opacity: desabilitado(paraIso(hj)) ? 0.4 : 1 }}>
+          style={{ ...botaoRodape, color: C.activeIcon, fontWeight: 600, opacity: desabilitado(paraIso(hj)) ? 0.4 : 1 }}>
           Hoje
         </button>
       </div>

@@ -46,13 +46,13 @@ interface Resposta {
 // ── Componentes da página ──────────────────────────────────────────────────
 
 function Resultado({ r }: { r: RegistroLogin }) {
-  const cor = r.sucesso ? '#047857' : '#B91C1C'
+  const cor = r.sucesso ? '#34D399' : '#F87171'
   return (
     <div>
       <span style={{
         display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 600,
-        color: cor, background: r.sucesso ? '#ECFDF5' : '#FEF2F2',
-        border: `1px solid ${r.sucesso ? '#A7F3D0' : '#FECACA'}`, padding: '2px 8px', borderRadius: 999,
+        color: cor, background: r.sucesso ? '#0F2A1F' : '#2A1414',
+        border: `1px solid ${r.sucesso ? '#1F5A40' : '#5B2323'}`, padding: '2px 8px', borderRadius: 999,
       }}>
         <span style={{ width: 6, height: 6, borderRadius: '50%', background: cor }} />
         {r.sucesso ? 'Sucesso' : 'Falha'}
@@ -152,15 +152,15 @@ export default function RegistrosLogin() {
       {/* Resumo */}
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 16 }}>
         <Card rotulo="Tentativas" valor={data?.total ?? 0} />
-        <Card rotulo="Com sucesso" valor={resumo?.sucesso ?? 0} cor="#047857" />
-        <Card rotulo="Falhas" valor={resumo?.falhas ?? 0} cor="#B91C1C" />
+        <Card rotulo="Com sucesso" valor={resumo?.sucesso ?? 0} cor="#34D399" />
+        <Card rotulo="Falhas" valor={resumo?.falhas ?? 0} cor="#F87171" />
         <Cartao flex="2 1 300px">
           <RotuloCartao>Por aparelho</RotuloCartao>
           <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginTop: 10 }}>
             {(['COMPUTADOR', 'CELULAR', 'TABLET', 'DESCONHECIDO'] as TipoDispositivo[])
               .filter(t => t !== 'DESCONHECIDO' || (resumo?.porDispositivo.DESCONHECIDO ?? 0) > 0)
               .map(t => (
-                <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 8, color: C.sidebarBg }}>
+                <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 8, color: C.activeIcon }}>
                   <IconeDispositivo tipo={t} size={18} />
                   <span style={{ fontSize: 13, color: C.tableTextMuted }}>{ROTULO_DISPOSITIVO[t]}</span>
                   <span style={{ fontSize: 15, fontWeight: 700, color: C.tableText }}>{resumo?.porDispositivo[t] ?? 0}</span>
@@ -227,7 +227,7 @@ export default function RegistrosLogin() {
         {detalhe && (
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-              <span style={{ width: 44, height: 44, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#EEF3F1', color: C.sidebarBg }}>
+              <span style={{ width: 44, height: 44, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0B1412', color: C.activeIcon }}>
                 <IconeDispositivo tipo={detalhe.tipoDispositivo} size={24} />
               </span>
               <div>

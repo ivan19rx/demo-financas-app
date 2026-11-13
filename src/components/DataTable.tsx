@@ -113,11 +113,11 @@ export function ActionMenu({ items }: { items: ActionItem[] }) {
         aria-expanded={open}
         style={{
           width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: open ? '#F1F5F3' : 'transparent',
+          background: open ? '#17241F' : 'transparent',
           border: `1px solid ${C.tableBorder}`, borderRadius: 8,
           color: C.activeIcon, cursor: 'pointer', transition: 'background 0.15s',
         }}
-        onMouseEnter={e => { if (!open) (e.currentTarget as HTMLElement).style.background = '#F1F5F3' }}
+        onMouseEnter={e => { if (!open) (e.currentTarget as HTMLElement).style.background = '#17241F' }}
         onMouseLeave={e => { if (!open) (e.currentTarget as HTMLElement).style.background = 'transparent' }}
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -134,7 +134,7 @@ export function ActionMenu({ items }: { items: ActionItem[] }) {
           onKeyDown={onMenuKeyDown}
           style={{
             position: 'fixed', top: coords.top, left: coords.left, zIndex: 1000,
-            minWidth: 168, background: '#fff',
+            minWidth: 168, background: '#121D1A',
             border: `1px solid ${C.tableBorder}`, borderRadius: 10,
             boxShadow: '0 8px 24px rgba(16, 40, 32, 0.12)',
             padding: 4, display: 'flex', flexDirection: 'column',
@@ -149,10 +149,10 @@ export function ActionMenu({ items }: { items: ActionItem[] }) {
               style={{
                 width: '100%', textAlign: 'left', background: 'transparent', border: 'none',
                 borderRadius: 6, padding: '8px 12px', fontSize: 13, fontWeight: 500,
-                cursor: 'pointer', color: item.danger ? '#DC2626' : C.tableText,
+                cursor: 'pointer', color: item.danger ? '#F87171' : C.tableText,
                 transition: 'background 0.15s',
               }}
-              onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = item.danger ? '#FEF2F2' : '#F1F5F3'}
+              onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = item.danger ? '#2A1414' : '#17241F'}
               onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
             >
               {item.label}

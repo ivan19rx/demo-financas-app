@@ -31,15 +31,15 @@ export class ErrorBoundary extends Component<Props, State> {
         background: C.mainBg, padding: 24,
       }}>
         <div style={{
-          maxWidth: 440, width: '100%', background: '#fff',
-          border: '1px solid #E2EBE7', borderRadius: 14, padding: '32px 28px',
+          maxWidth: 440, width: '100%', background: '#121D1A',
+          border: '1px solid #24352F', borderRadius: 14, padding: '32px 28px',
           textAlign: 'center', boxShadow: '0 12px 40px rgba(16,40,32,0.08)',
         }}>
           <p style={{ fontSize: 40, margin: '0 0 12px' }}>⚠️</p>
-          <h1 style={{ fontSize: 18, fontWeight: 700, color: '#1A2E25', margin: '0 0 8px' }}>
+          <h1 style={{ fontSize: 18, fontWeight: 700, color: '#E4EEE9', margin: '0 0 8px' }}>
             Algo deu errado
           </h1>
-          <p style={{ fontSize: 14, color: '#557063', margin: '0 0 20px', lineHeight: 1.5 }}>
+          <p style={{ fontSize: 14, color: '#93AEA2', margin: '0 0 20px', lineHeight: 1.5 }}>
             Ocorreu um erro inesperado nesta página. Você pode tentar recarregar.
           </p>
           <button

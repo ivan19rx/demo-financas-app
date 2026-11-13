@@ -1,12 +1,13 @@
+// Tema escuro da demonstração.
 export const C = {
-  sidebarBg:       '#004147',
-  mainBg:          '#EEF3F1',
-  borderColor:     '#1E4538',
+  sidebarBg:       '#0F1F1B',
+  mainBg:          '#0B1412',
+  borderColor:     '#1E3530',
   activeItem:      '#1E4A38',
   hoverItem:       '#172F28',
   activeIcon:      '#7EC8A4',
   mutedIcon:       '#5A8A74',
-  // textos e ícones dos itens do menu lateral (branco forte sobre o verde)
+  // textos e ícones dos itens do menu lateral
   navText:         '#E6EFEA',
   navTextActive:   '#FFFFFF',
   navIcon:         '#A9CDBC',
@@ -19,11 +20,11 @@ export const C = {
   sectionLabel:    '#94BBA9',
   gold:            '#C9B06A',
   userText:        '#C9B06A',
-  topbarBg:        '#004147',
-  tableBg:         '#FFFFFF',
-  tableRowHover:   '#F6FAF8',
-  tableHeader:     '#F1F5F3',
-  tableBorder:     '#E2EBE7',
-  tableText:       '#1A2E25',
-  tableTextMuted:  '#557063',
+  topbarBg:        '#0F1F1B',
+  tableBg:         '#121D1A',
+  tableRowHover:   '#1A2A25',
+  tableHeader:     '#17241F',
+  tableBorder:     '#24352F',
+  tableText:       '#E4EEE9',
+  tableTextMuted:  '#93AEA2',
 }

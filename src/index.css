@@ -1,18 +1,27 @@
 @import "tailwindcss";
 
+/* Tema escuro: controles nativos (select, date, scrollbar) também escuros. */
+:root {
+  color-scheme: dark;
+}
+body {
+  background-color: #0B1412;
+  color: #E4EEE9;
+}
+
 /* Hover das linhas da tabela feito 100% em CSS (sem estado React), evitando
    re-render da tabela a cada movimento do mouse. Cor = C.tableRowHover. */
 .dt-row {
   transition: background-color 0.15s;
 }
 .dt-row:hover {
-  background-color: #F6FAF8;
+  background-color: #1A2A25;
 }
 
 /* Cabeçalho do mês (Lançamentos) também com hover em CSS. Cores: C.sidebarBg
    normal, C.activeItem no hover. */
 .mes-header {
-  background-color: #004147;
+  background-color: #0F1F1B;
   transition: background-color 0.15s;
 }
 .mes-header:hover {
@@ -28,9 +37,9 @@ body {
    components/ui/chart.tsx), com as cores do site. Geram classes como
    bg-background, text-muted-foreground e border-border. */
 @theme inline {
-  --color-background: #FFFFFF;
-  --color-foreground: #1A2E25;
-  --color-muted: #F1F5F3;
-  --color-muted-foreground: #557063;
-  --color-border: #E2EBE7;
+  --color-background: #121D1A;
+  --color-foreground: #E4EEE9;
+  --color-muted: #17241F;
+  --color-muted-foreground: #93AEA2;
+  --color-border: #24352F;
 }

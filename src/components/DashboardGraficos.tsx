@@ -22,8 +22,8 @@ interface Props {
   faixa: { inicio: Date; fim: Date } | null   // null = geral
 }
 
-const VERDE = '#16a34a'
-const VERMELHO = '#dc2626'
+const VERDE = '#4ADE80'
+const VERMELHO = '#F87171'
 const TEAL = '#1E6B5A'
 
 const centavos = (v: string) => Math.round((parseFloat(v) || 0) * 100)
@@ -94,9 +94,9 @@ function chartLabel(item: { dataKey?: unknown; name?: unknown }) {
 
 function Painel({ titulo, descricao, children }: { titulo: string; descricao: string; children: React.ReactNode }) {
   return (
-    <div style={{ background: '#fff', border: '1px solid #E2EBE7', borderRadius: 12, padding: '20px 24px', minWidth: 0 }}>
-      <p style={{ margin: 0, fontSize: 14, fontWeight: 600, color: '#1A2E25' }}>{titulo}</p>
-      <p style={{ margin: '2px 0 16px', fontSize: 12, color: '#557063' }}>{descricao}</p>
+    <div style={{ background: '#121D1A', border: '1px solid #24352F', borderRadius: 12, padding: '20px 24px', minWidth: 0 }}>
+      <p style={{ margin: 0, fontSize: 14, fontWeight: 600, color: '#E4EEE9' }}>{titulo}</p>
+      <p style={{ margin: '2px 0 16px', fontSize: 12, color: '#93AEA2' }}>{descricao}</p>
       {children}
     </div>
   )
@@ -104,7 +104,7 @@ function Painel({ titulo, descricao, children }: { titulo: string; descricao: st
 
 function Vazio({ texto }: { texto: string }) {
   return (
-    <div style={{ height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#557063', fontSize: 13 }}>
+    <div style={{ height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#93AEA2', fontSize: 13 }}>
       {texto}
     </div>
   )

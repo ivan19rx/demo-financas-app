@@ -89,15 +89,15 @@ function FiltroPeriodo({ valor, onChange }: { valor: Periodo; onChange: (p: Peri
           display: 'inline-flex', alignItems: 'center', gap: 8,
           padding: '8px 12px', borderRadius: 8, cursor: 'pointer', font: 'inherit',
           fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap',
-          border: '1px solid #E2EBE7', background: aberto ? '#F1F5F3' : '#fff', color: '#1A2E25',
+          border: '1px solid #24352F', background: aberto ? '#17241F' : '#121D1A', color: '#E4EEE9',
         }}
       >
-        <svg width="16" height="16" fill="none" stroke="#4B7A6A" strokeWidth="1.8" viewBox="0 0 24 24">
+        <svg width="16" height="16" fill="none" stroke="#8FB3A4" strokeWidth="1.8" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
         {atual.label}
         <svg
-          width="14" height="14" fill="none" stroke="#4B7A6A" strokeWidth="2" viewBox="0 0 24 24"
+          width="14" height="14" fill="none" stroke="#8FB3A4" strokeWidth="2" viewBox="0 0 24 24"
           style={{ transition: 'transform 0.2s', transform: aberto ? 'rotate(180deg)' : 'none' }}
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -110,7 +110,7 @@ function FiltroPeriodo({ valor, onChange }: { valor: Periodo; onChange: (p: Peri
           aria-label="Período"
           style={{
             position: 'absolute', top: 'calc(100% + 6px)', right: 0, zIndex: 20, minWidth: 190,
-            background: '#fff', border: '1px solid #E2EBE7', borderRadius: 10, padding: 6,
+            background: '#121D1A', border: '1px solid #24352F', borderRadius: 10, padding: 6,
             boxShadow: '0 8px 24px rgba(16, 42, 34, 0.12)',
           }}
         >
@@ -128,9 +128,9 @@ function FiltroPeriodo({ valor, onChange }: { valor: Periodo; onChange: (p: Peri
                   cursor: 'pointer', font: 'inherit', fontSize: 13, textAlign: 'left',
                   fontWeight: ativo ? 600 : 500,
                   background: ativo ? C.activeItem : 'transparent',
-                  color: ativo ? C.navText : '#1A2E25',
+                  color: ativo ? C.navText : '#E4EEE9',
                 }}
-                onMouseEnter={e => { if (!ativo) e.currentTarget.style.background = '#F1F5F3' }}
+                onMouseEnter={e => { if (!ativo) e.currentTarget.style.background = '#17241F' }}
                 onMouseLeave={e => { if (!ativo) e.currentTarget.style.background = 'transparent' }}
               >
                 {p.label}
@@ -150,10 +150,10 @@ function FiltroPeriodo({ valor, onChange }: { valor: Periodo; onChange: (p: Peri
 
 function Card({ label, value, color, sub }: { label: string; value: string; color: string; sub?: string }) {
   return (
-    <div style={{ background: '#fff', border: '1px solid #E2EBE7', borderRadius: 12, padding: '20px 24px' }}>
-      <p style={{ fontSize: 11, fontWeight: 600, color: '#557063', textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 8px' }}>{label}</p>
+    <div style={{ background: '#121D1A', border: '1px solid #24352F', borderRadius: 12, padding: '20px 24px' }}>
+      <p style={{ fontSize: 11, fontWeight: 600, color: '#93AEA2', textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 8px' }}>{label}</p>
       <p style={{ fontSize: 22, fontWeight: 700, color, margin: 0 }}>{value}</p>
-      {sub && <p style={{ fontSize: 12, color: '#557063', margin: '4px 0 0' }}>{sub}</p>}
+      {sub && <p style={{ fontSize: 12, color: '#93AEA2', margin: '4px 0 0' }}>{sub}</p>}
     </div>
   )
 }
@@ -161,17 +161,17 @@ function Card({ label, value, color, sub }: { label: string; value: string; colo
 function LancamentoRow({ item, isLast }: { item: Lancamento; isLast: boolean }) {
   const isEntrada = item.tipo === 'ENTRADA'
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 0', borderBottom: isLast ? 'none' : '1px solid #F1F5F3', gap: 12 }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 0', borderBottom: isLast ? 'none' : '1px solid #17241F', gap: 12 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <div style={{ width: 36, height: 36, borderRadius: '50%', background: isEntrada ? '#dcfce7' : '#fee2e2', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+        <div style={{ width: 36, height: 36, borderRadius: '50%', background: isEntrada ? '#12321F' : '#3A1616', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
           <span style={{ fontSize: 14 }}>{isEntrada ? '▲' : '▼'}</span>
         </div>
         <div>
-          <p style={{ margin: 0, fontSize: 14, fontWeight: 500, color: '#1A2E25' }}>{item.fornecedorCliente.nome}</p>
-          <p style={{ margin: '2px 0 0', fontSize: 12, color: '#557063' }}>{item.categoria.nome} · {formatDate(item.dataLancamento)}</p>
+          <p style={{ margin: 0, fontSize: 14, fontWeight: 500, color: '#E4EEE9' }}>{item.fornecedorCliente.nome}</p>
+          <p style={{ margin: '2px 0 0', fontSize: 12, color: '#93AEA2' }}>{item.categoria.nome} · {formatDate(item.dataLancamento)}</p>
         </div>
       </div>
-      <span style={{ fontWeight: 700, fontSize: 14, color: isEntrada ? '#16a34a' : '#dc2626', whiteSpace: 'nowrap' }}>
+      <span style={{ fontWeight: 700, fontSize: 14, color: isEntrada ? '#4ADE80' : '#F87171', whiteSpace: 'nowrap' }}>
         {isEntrada ? '+' : '-'} {moeda(parseFloat(item.valor) || 0)}
       </span>
     </div>
@@ -183,17 +183,17 @@ function ClienteSaldoRow({ cliente, isLast }: { cliente: Cliente; isLast: boolea
   const positivo = saldo >= 0
   const inicial = cliente.nome.trim().charAt(0).toUpperCase() || '?'
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 0', borderBottom: isLast ? 'none' : '1px solid #F1F5F3', gap: 12 }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 0', borderBottom: isLast ? 'none' : '1px solid #17241F', gap: 12 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
-        <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#F1F5F3', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-          <span style={{ fontSize: 14, fontWeight: 700, color: '#4B7A6A' }}>{inicial}</span>
+        <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#17241F', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <span style={{ fontSize: 14, fontWeight: 700, color: '#8FB3A4' }}>{inicial}</span>
         </div>
         <div style={{ minWidth: 0 }}>
-          <p style={{ margin: 0, fontSize: 14, fontWeight: 500, color: '#1A2E25', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{cliente.nome}</p>
-          <p style={{ margin: '2px 0 0', fontSize: 12, color: '#557063' }}>{cliente.ativo ? 'Ativo' : 'Inativo'}</p>
+          <p style={{ margin: 0, fontSize: 14, fontWeight: 500, color: '#E4EEE9', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{cliente.nome}</p>
+          <p style={{ margin: '2px 0 0', fontSize: 12, color: '#93AEA2' }}>{cliente.ativo ? 'Ativo' : 'Inativo'}</p>
         </div>
       </div>
-      <span style={{ fontWeight: 700, fontSize: 14, color: positivo ? '#16a34a' : '#dc2626', whiteSpace: 'nowrap' }}>
+      <span style={{ fontWeight: 700, fontSize: 14, color: positivo ? '#4ADE80' : '#F87171', whiteSpace: 'nowrap' }}>
         {moeda(saldo)}
       </span>
     </div>
@@ -202,8 +202,8 @@ function ClienteSaldoRow({ cliente, isLast }: { cliente: Cliente; isLast: boolea
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div style={{ background: '#fff', border: '1px solid #E2EBE7', borderRadius: 12, padding: '20px 24px' }}>
-      <p style={{ margin: '0 0 16px', fontSize: 14, fontWeight: 600, color: '#1A2E25' }}>{title}</p>
+    <div style={{ background: '#121D1A', border: '1px solid #24352F', borderRadius: 12, padding: '20px 24px' }}>
+      <p style={{ margin: '0 0 16px', fontSize: 14, fontWeight: 600, color: '#E4EEE9' }}>{title}</p>
       {children}
     </div>
   )
@@ -301,11 +301,11 @@ export default function Dashboard() {
       {!loading && !error && calculado && (
         <>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(165px, 1fr))', gap: 14, marginBottom: 20 }}>
-            <Card label="Total de Clientes" value={String(calculado.totalClientes)} color="#1A2E25" sub={`${calculado.clientesAtivos} ativos`} />
-            <Card label="Lançamentos"       value={String(resumo.totalRegistros)}   color="#1A2E25" />
-            <Card label="Total Entradas"    value={moeda(resumo.totalEntradas)}     color="#16a34a" />
-            <Card label="Total Saídas"      value={moeda(resumo.totalSaidas)}       color="#dc2626" />
-            <Card label="Saldo Final"       value={moeda(resumo.saldoFinal)}        color={resumo.saldoFinal >= 0 ? '#16a34a' : '#dc2626'} />
+            <Card label="Total de Clientes" value={String(calculado.totalClientes)} color="#E4EEE9" sub={`${calculado.clientesAtivos} ativos`} />
+            <Card label="Lançamentos"       value={String(resumo.totalRegistros)}   color="#E4EEE9" />
+            <Card label="Total Entradas"    value={moeda(resumo.totalEntradas)}     color="#4ADE80" />
+            <Card label="Total Saídas"      value={moeda(resumo.totalSaidas)}       color="#F87171" />
+            <Card label="Saldo Final"       value={moeda(resumo.saldoFinal)}        color={resumo.saldoFinal >= 0 ? '#4ADE80' : '#F87171'} />
           </div>
 
           <DashboardGraficos todos={lancamentos ?? []} noPeriodo={noPeriodo} faixa={faixa} />
@@ -314,14 +314,14 @@ export default function Dashboard() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14 }}>
             <Section title="Últimos Lançamentos">
               {ultimos.length === 0
-                ? <p style={{ color: '#557063', fontSize: 13, margin: 0 }}>{geral ? 'Nenhum lançamento registrado.' : 'Nenhum lançamento no período.'}</p>
+                ? <p style={{ color: '#93AEA2', fontSize: 13, margin: 0 }}>{geral ? 'Nenhum lançamento registrado.' : 'Nenhum lançamento no período.'}</p>
                 : ultimos.map((l, i) => <LancamentoRow key={l.id} item={l} isLast={i === ultimos.length - 1} />)
               }
             </Section>
 
             <Section title={geral ? 'Clientes com Maior Saldo' : 'Clientes com Maior Saldo no Período'}>
               {topClientes.length === 0
-                ? <p style={{ color: '#557063', fontSize: 13, margin: 0 }}>{geral ? 'Nenhum cliente cadastrado.' : 'Nenhum cliente com lançamentos no período.'}</p>
+                ? <p style={{ color: '#93AEA2', fontSize: 13, margin: 0 }}>{geral ? 'Nenhum cliente cadastrado.' : 'Nenhum cliente com lançamentos no período.'}</p>
                 : topClientes.map((c, i) => <ClienteSaldoRow key={c.id} cliente={c} isLast={i === topClientes.length - 1} />)
               }
             </Section>

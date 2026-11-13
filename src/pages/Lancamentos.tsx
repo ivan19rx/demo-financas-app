@@ -73,13 +73,13 @@ function linhaEspelho(l: LancamentoAPI): EspelhoCelula[] {
   const ent = l.tipo === 'ENTRADA'
   const num = Math.abs(parseFloat(l.valor) || 0)
   return [
-    { texto: formatDate(l.dataLancamento), cor: '#557063' },
-    { texto: `${ent ? '+ ' : '- '}${moeda(num)}`, cor: ent ? '#16a34a' : '#dc2626', negrito: true, nowrap: true },
-    { texto: l.fornecedorCliente?.nome ?? '—', cor: '#557063' },
-    { texto: l.conta?.nome ?? '—', cor: '#557063' },
-    { texto: l.categoria?.nome ?? '—', cor: '#557063' },
-    { texto: l.classificacao ?? '—', cor: '#557063' },
-    { texto: l.observacao ?? '—', cor: '#557063' },
+    { texto: formatDate(l.dataLancamento), cor: '#93AEA2' },
+    { texto: `${ent ? '+ ' : '- '}${moeda(num)}`, cor: ent ? '#4ADE80' : '#F87171', negrito: true, nowrap: true },
+    { texto: l.fornecedorCliente?.nome ?? '—', cor: '#93AEA2' },
+    { texto: l.conta?.nome ?? '—', cor: '#93AEA2' },
+    { texto: l.categoria?.nome ?? '—', cor: '#93AEA2' },
+    { texto: l.classificacao ?? '—', cor: '#93AEA2' },
+    { texto: l.observacao ?? '—', cor: '#93AEA2' },
   ]
 }
 
@@ -165,15 +165,15 @@ function MesHeader({ label, lancamentos, aberto, onToggle }: {
         <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
           <div style={{ textAlign: 'right' }}>
             <p style={{ margin: 0, fontSize: 11, color: C.mutedText, textTransform: 'uppercase', letterSpacing: '0.04em' }}>Entradas</p>
-            <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: '#16a34a' }}>+ {moeda(entradas)}</p>
+            <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: '#4ADE80' }}>+ {moeda(entradas)}</p>
           </div>
           <div style={{ textAlign: 'right' }}>
             <p style={{ margin: 0, fontSize: 11, color: C.mutedText, textTransform: 'uppercase', letterSpacing: '0.04em' }}>Saídas</p>
-            <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: '#dc2626' }}>- {moeda(saidas)}</p>
+            <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: '#F87171' }}>- {moeda(saidas)}</p>
           </div>
           <div style={{ textAlign: 'right', minWidth: 90 }}>
             <p style={{ margin: 0, fontSize: 11, color: C.mutedText, textTransform: 'uppercase', letterSpacing: '0.04em' }}>Saldo</p>
-            <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: saldo >= 0 ? '#16a34a' : '#dc2626' }}>
+            <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: saldo >= 0 ? '#4ADE80' : '#F87171' }}>
               {saldo >= 0 ? '+ ' : '- '}{moeda(Math.abs(saldo))}
             </p>
           </div>
@@ -255,7 +255,7 @@ function LancamentoForm({ form, errors, serverError, submitting, onChange, onSub
       </div>
       <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end', marginTop: 8 }}>
         <button onClick={onCancel} disabled={submitting}
-          style={{ padding: '8px 18px', borderRadius: 8, border: '1px solid #E2EBE7', background: '#fff', color: '#4B7A6A', fontSize: 14, cursor: 'pointer', fontWeight: 500 }}>
+          style={{ padding: '8px 18px', borderRadius: 8, border: '1px solid #24352F', background: '#121D1A', color: '#8FB3A4', fontSize: 14, cursor: 'pointer', fontWeight: 500 }}>
           Cancelar
         </button>
         <button onClick={onSubmit} disabled={submitting}
@@ -294,9 +294,9 @@ function RelatorioButton({ onClick, disabled, label, title, variant = 'solid' }:
       style={{
         display: 'flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap',
         padding: '9px 16px', borderRadius: 8,
-        border: solid ? 'none' : '1px solid #E2EBE7',
-        background: solid ? (disabled ? '#E2EBE7' : C.activeItem) : '#fff',
-        color: disabled ? '#9DB8AD' : solid ? C.navText : '#4B7A6A',
+        border: solid ? 'none' : '1px solid #24352F',
+        background: solid ? (disabled ? '#24352F' : C.activeItem) : '#121D1A',
+        color: disabled ? '#6F8B80' : solid ? C.navText : '#8FB3A4',
         fontSize: 14, fontWeight: 600, cursor: disabled ? 'not-allowed' : 'pointer',
       }}
     >
@@ -311,7 +311,7 @@ function RelatorioButton({ onClick, disabled, label, title, variant = 'solid' }:
 function BuscaBar({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   return (
     <div style={{ position: 'relative', flex: 1, minWidth: 240 }}>
-      <svg width="16" height="16" fill="none" stroke="#9DB8AD" strokeWidth="2" viewBox="0 0 24 24"
+      <svg width="16" height="16" fill="none" stroke="#6F8B80" strokeWidth="2" viewBox="0 0 24 24"
         style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M19 11a8 8 0 11-16 0 8 8 0 0116 0z" />
       </svg>
@@ -320,7 +320,7 @@ function BuscaBar({ value, onChange }: { value: string; onChange: (v: string) =>
         placeholder="Buscar por cliente, conta, categoria, observação, valor..."
         value={value}
         onChange={e => onChange(e.target.value)}
-        style={{ width: '100%', padding: '9px 12px 9px 36px', borderRadius: 8, border: '1px solid #E2EBE7', fontSize: 14, color: '#1A2E25', outline: 'none', boxSizing: 'border-box', background: '#fff' }}
+        style={{ width: '100%', padding: '9px 12px 9px 36px', borderRadius: 8, border: '1px solid #24352F', fontSize: 14, color: '#E4EEE9', outline: 'none', boxSizing: 'border-box', background: '#121D1A' }}
       />
     </div>
   )
@@ -339,9 +339,9 @@ function TipoTabs({ value, onChange }: { value: '' | 'ENTRADA' | 'SAIDA'; onChan
         return (
           <button key={tab.value} onClick={() => onChange(tab.value)} style={{
             padding: '8px 14px', borderRadius: 8, fontSize: 13, fontWeight: 500, cursor: 'pointer',
-            border: `1px solid ${active ? C.activeIcon : '#E2EBE7'}`,
-            background: active ? C.activeItem : '#fff',
-            color: active ? C.activeIcon : '#557063',
+            border: `1px solid ${active ? C.activeIcon : '#24352F'}`,
+            background: active ? C.activeItem : '#121D1A',
+            color: active ? C.activeIcon : '#93AEA2',
             transition: 'all 0.15s', whiteSpace: 'nowrap',
           }}>
             {tab.label}
@@ -353,7 +353,7 @@ function TipoTabs({ value, onChange }: { value: '' | 'ENTRADA' | 'SAIDA'; onChan
 }
 
 const labelStyle: React.CSSProperties = {
-  fontSize: 12, fontWeight: 600, color: '#557063',
+  fontSize: 12, fontWeight: 600, color: '#93AEA2',
   textTransform: 'uppercase', letterSpacing: '0.04em',
 }
 
@@ -370,7 +370,7 @@ function SelectFiltro({ label, value, onChange, options, placeholder }: {
       <select
         value={value}
         onChange={e => onChange(e.target.value)}
-        style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E2EBE7', fontSize: 14, color: '#1A2E25', background: '#F9FAFB', cursor: 'pointer', outline: 'none' }}
+        style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #24352F', fontSize: 14, color: '#E4EEE9', background: '#17241F', cursor: 'pointer', outline: 'none' }}
       >
         <option value="">{placeholder}</option>
         {options.map(o => <option key={o.id} value={o.id}>{o.nome}</option>)}
@@ -567,9 +567,9 @@ export default function Lancamentos() {
         titulo: g.label,
         contador: `${g.items.length} lançamento${g.items.length !== 1 ? 's' : ''}`,
         resumo: [
-          { label: 'Entradas', valor: `+ ${moeda(entradas)}`, cor: '#16a34a' },
-          { label: 'Saídas',   valor: `- ${moeda(saidas)}`,   cor: '#dc2626' },
-          { label: 'Saldo',    valor: `${saldo >= 0 ? '+ ' : '- '}${moeda(Math.abs(saldo))}`, cor: saldo >= 0 ? '#16a34a' : '#dc2626' },
+          { label: 'Entradas', valor: `+ ${moeda(entradas)}`, cor: '#4ADE80' },
+          { label: 'Saídas',   valor: `- ${moeda(saidas)}`,   cor: '#F87171' },
+          { label: 'Saldo',    valor: `${saldo >= 0 ? '+ ' : '- '}${moeda(Math.abs(saldo))}`, cor: saldo >= 0 ? '#4ADE80' : '#F87171' },
         ],
         colunas: COLUNAS_ESPELHO,
         linhas: sortItems(g.items, g.key).map(linhaEspelho),
@@ -706,7 +706,7 @@ export default function Lancamentos() {
         {error    && <ErrorState message={error} onRetry={refetch} />}
 
         {!loading && !error && data && data.length > 0 && (
-          <div style={{ background: '#fff', border: '1px solid #E2EBE7', borderRadius: 12, padding: '20px', marginBottom: 16 }}>
+          <div style={{ background: '#121D1A', border: '1px solid #24352F', borderRadius: 12, padding: '20px', marginBottom: 16 }}>
             <p style={{ ...labelStyle, fontSize: 12, letterSpacing: '0.05em', margin: '0 0 14px' }}>Filtros</p>
 
             {/* Busca rápida (texto livre) */}
@@ -738,8 +738,8 @@ export default function Lancamentos() {
                   onClick={limparFiltros}
                   disabled={!filtroAtivo}
                   style={{
-                    padding: '9px 16px', borderRadius: 8, border: '1px solid #E2EBE7', background: '#fff',
-                    color: filtroAtivo ? '#557063' : '#C4D4CC', fontSize: 14, fontWeight: 500,
+                    padding: '9px 16px', borderRadius: 8, border: '1px solid #24352F', background: '#121D1A',
+                    color: filtroAtivo ? '#93AEA2' : '#2E433C', fontSize: 14, fontWeight: 500,
                     cursor: filtroAtivo ? 'pointer' : 'not-allowed',
                   }}
                 >
@@ -775,7 +775,7 @@ export default function Lancamentos() {
                     onToggle={() => toggleGrupo(grupo.key, index)}
                   />
                   {aberto && (
-                    <div style={{ background: '#fff', borderTop: `1px solid ${C.borderColor}` }}>
+                    <div style={{ background: '#121D1A', borderTop: `1px solid ${C.borderColor}` }}>
                       {/* Filtro de ordenação dentro do container */}
                       <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px 16px 0', gap: 4 }}>
                         {(['recente', 'antigo'] as const).map(op => (
@@ -783,10 +783,10 @@ export default function Lancamentos() {
                             key={op}
                             onClick={() => setOrdem(grupo.key, op)}
                             style={{
-                              padding: '5px 12px', borderRadius: 6, border: '1px solid #E2EBE7',
+                              padding: '5px 12px', borderRadius: 6, border: '1px solid #24352F',
                               fontSize: 11, fontWeight: 600, cursor: 'pointer',
                               background: ordem === op ? C.activeItem : 'transparent',
-                              color: ordem === op ? C.activeIcon : '#557063',
+                              color: ordem === op ? C.activeIcon : '#93AEA2',
                               transition: 'all 0.15s',
                             }}
                           >

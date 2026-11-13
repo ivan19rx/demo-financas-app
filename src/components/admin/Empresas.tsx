@@ -178,8 +178,8 @@ function EmpresaForm({ form, errors, serverError, submitting, onChange, onSubmit
       </Field>
 
       {/* Divisor */}
-      <div style={{ height: 1, background: '#E2EBE7', margin: '8px 0 16px' }} />
-      <p style={{ fontSize: 11, fontWeight: 600, color: '#557063', textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 14px' }}>
+      <div style={{ height: 1, background: '#24352F', margin: '8px 0 16px' }} />
+      <p style={{ fontSize: 11, fontWeight: 600, color: '#93AEA2', textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 14px' }}>
         Acesso ao sistema
       </p>
 
@@ -203,7 +203,7 @@ function EmpresaForm({ form, errors, serverError, submitting, onChange, onSubmit
 
       <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end', marginTop: 8 }}>
         <button onClick={onCancel} disabled={submitting}
-          style={{ padding: '8px 18px', borderRadius: 8, border: '1px solid #E2EBE7', background: '#fff', color: '#4B7A6A', fontSize: 14, cursor: 'pointer', fontWeight: 500 }}>
+          style={{ padding: '8px 18px', borderRadius: 8, border: '1px solid #24352F', background: '#121D1A', color: '#8FB3A4', fontSize: 14, cursor: 'pointer', fontWeight: 500 }}>
           Cancelar
         </button>
         <button onClick={onSubmit} disabled={submitting}
@@ -243,7 +243,7 @@ function SearchSortBar({ search, onSearchChange, sortAsc, onToggleSort }: {
       {/* Campo de busca */}
       <div style={{ position: 'relative', flex: 1, minWidth: 220 }}>
         <svg
-          width="16" height="16" fill="none" stroke="#9DB8AD" strokeWidth="2" viewBox="0 0 24 24"
+          width="16" height="16" fill="none" stroke="#6F8B80" strokeWidth="2" viewBox="0 0 24 24"
           style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M19 11a8 8 0 11-16 0 8 8 0 0116 0z" />
@@ -255,8 +255,8 @@ function SearchSortBar({ search, onSearchChange, sortAsc, onToggleSort }: {
           onChange={e => onSearchChange(e.target.value)}
           style={{
             width: '100%', padding: '10px 12px 10px 36px', borderRadius: 8,
-            border: '1px solid #E2EBE7', fontSize: 14, color: '#1A2E25',
-            outline: 'none', boxSizing: 'border-box', background: '#fff',
+            border: '1px solid #24352F', fontSize: 14, color: '#E4EEE9',
+            outline: 'none', boxSizing: 'border-box', background: '#121D1A',
           }}
         />
       </div>
@@ -266,8 +266,8 @@ function SearchSortBar({ search, onSearchChange, sortAsc, onToggleSort }: {
         onClick={onToggleSort}
         style={{
           display: 'flex', alignItems: 'center', gap: 6,
-          padding: '0 16px', borderRadius: 8, border: '1px solid #E2EBE7',
-          background: '#fff', color: '#4B7A6A', fontSize: 13, fontWeight: 600,
+          padding: '0 16px', borderRadius: 8, border: '1px solid #24352F',
+          background: '#121D1A', color: '#8FB3A4', fontSize: 13, fontWeight: 600,
           cursor: 'pointer', whiteSpace: 'nowrap',
         }}
       >
@@ -456,9 +456,9 @@ export default function Empresas() {
         ) : error ? (
           <ErrorState message={error} onRetry={refetch} />
         ) : empresasFiltradas.length === 0 ? (
-          <div style={{ background: '#F1F5F3', border: '1px solid #E2EBE7', borderRadius: 10, padding: '40px 20px', textAlign: 'center' }}>
+          <div style={{ background: '#17241F', border: '1px solid #24352F', borderRadius: 10, padding: '40px 20px', textAlign: 'center' }}>
             <p style={{ fontSize: 32, margin: '0 0 8px' }}>🔍</p>
-            <p style={{ color: '#557063', fontSize: 14, margin: 0 }}>
+            <p style={{ color: '#93AEA2', fontSize: 14, margin: 0 }}>
               {search ? `Nenhuma empresa encontrada para "${search}".` : 'Nenhuma empresa cadastrada ainda.'}
             </p>
           </div>

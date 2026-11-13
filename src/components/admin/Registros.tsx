@@ -6,7 +6,7 @@ import { ROTULO_DISPOSITIVO, type TipoAcesso, type TipoDispositivo } from '../..
 // Peças visuais compartilhadas pelas telas de registros do admin.
 
 const cartao: React.CSSProperties = {
-  background: '#fff', border: `1px solid ${C.tableBorder}`, borderRadius: 12, padding: '14px 16px',
+  background: '#121D1A', border: `1px solid ${C.tableBorder}`, borderRadius: 12, padding: '14px 16px',
 }
 
 const rotulo: React.CSSProperties = {
@@ -15,7 +15,7 @@ const rotulo: React.CSSProperties = {
 
 const campo: React.CSSProperties = {
   padding: '8px 12px', borderRadius: 8, border: `1px solid ${C.tableBorder}`, fontSize: 14,
-  color: C.tableText, background: '#F9FAFB', outline: 'none', width: '100%', boxSizing: 'border-box',
+  color: C.tableText, background: '#17241F', outline: 'none', width: '100%', boxSizing: 'border-box',
 }
 
 export function IconeDispositivo({ tipo, size = 18 }: { tipo: TipoDispositivo; size?: number }) {
@@ -59,7 +59,7 @@ export function PainelFiltros({ children }: { children: React.ReactNode }) {
 export function Busca({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder: string }) {
   return (
     <div style={{ position: 'relative' }}>
-      <svg width="16" height="16" fill="none" stroke="#9DB8AD" strokeWidth="2" viewBox="0 0 24 24" aria-hidden
+      <svg width="16" height="16" fill="none" stroke="#6F8B80" strokeWidth="2" viewBox="0 0 24 24" aria-hidden
         style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M19 11a8 8 0 11-16 0 8 8 0 0116 0z" />
       </svg>
@@ -69,7 +69,7 @@ export function Busca({ value, onChange, placeholder }: { value: string; onChang
         placeholder={placeholder}
         value={value}
         onChange={e => onChange(e.target.value)}
-        style={{ ...campo, padding: '9px 12px 9px 36px', background: '#fff' }}
+        style={{ ...campo, padding: '9px 12px 9px 36px', background: '#121D1A' }}
       />
     </div>
   )
@@ -110,7 +110,7 @@ export function BotaoLimpar({ ativo, onClick }: { ativo: boolean; onClick: () =>
       disabled={!ativo}
       onClick={onClick}
       style={{
-        padding: '8px 14px', borderRadius: 8, border: `1px solid ${C.tableBorder}`, background: '#fff',
+        padding: '8px 14px', borderRadius: 8, border: `1px solid ${C.tableBorder}`, background: '#121D1A',
         fontSize: 14, color: C.tableText, cursor: ativo ? 'pointer' : 'default',
         opacity: ativo ? 1 : 0.5, whiteSpace: 'nowrap',
       }}
@@ -144,7 +144,7 @@ export function BotaoDetalhes({ onClick }: { onClick: () => void }) {
       className="rg-detalhes"
       onClick={onClick}
       style={{
-        border: `1px solid ${C.tableBorder}`, background: '#fff', color: C.sidebarBg,
+        border: `1px solid ${C.tableBorder}`, background: '#121D1A', color: C.activeIcon,
         borderRadius: 8, padding: '5px 10px', fontSize: 12, fontWeight: 600, cursor: 'pointer',
       }}
     >Detalhes</button>
@@ -156,20 +156,20 @@ export function EstilosRegistros() {
   return (
     <style>{`
       .rg-detalhes { transition: background .15s, border-color .15s; }
-      .rg-detalhes:hover { background: #EEF3F1 !important; border-color: ${C.activeIcon} !important; }
+      .rg-detalhes:hover { background: #0B1412 !important; border-color: ${C.activeIcon} !important; }
       .rg-atualizar { transition: background .15s; }
       .rg-atualizar:hover { background: ${C.activeItem} !important; }
-      .rg-limpar:not(:disabled):hover { background: #EEF3F1 !important; }
+      .rg-limpar:not(:disabled):hover { background: #0B1412 !important; }
     `}</style>
   )
 }
 
 export function BadgeAcesso({ tipo }: { tipo: TipoAcesso | null }) {
   const estilo = tipo === 'ADMIN'
-    ? { color: '#8A6D1F', background: '#C9B06A26', texto: 'Admin' }
+    ? { color: '#E0C068', background: '#C9B06A26', texto: 'Admin' }
     : tipo === 'EMPRESA'
-      ? { color: C.sidebarBg, background: '#E3F1EA', texto: 'Empresa' }
-      : { color: '#6B7280', background: '#F3F4F6', texto: 'Sem login' }
+      ? { color: C.activeIcon, background: '#183128', texto: 'Empresa' }
+      : { color: '#9CA3AF', background: '#17241F', texto: 'Sem login' }
   return (
     <span style={{
       fontSize: 10, fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase',
@@ -186,7 +186,7 @@ export function Dispositivo({ tipo, modelo, sistema, navegador }: {
     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
       <span style={{
         width: 32, height: 32, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: '#EEF3F1', color: C.sidebarBg,
+        background: '#0B1412', color: C.activeIcon,
       }}>
         <IconeDispositivo tipo={tipo} />
       </span>

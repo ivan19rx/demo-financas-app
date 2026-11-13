@@ -86,13 +86,13 @@ const TEXTO_STATUS: Record<number, string> = {
 }
 
 const COR_STATUS = (s: number) =>
-  s >= 500 ? { cor: '#B91C1C', fundo: '#FEF2F2', borda: '#FECACA' }
-    : s >= 400 ? { cor: '#B45309', fundo: '#FFFBEB', borda: '#FDE68A' }
-      : s >= 300 ? { cor: '#1D4ED8', fundo: '#EFF6FF', borda: '#BFDBFE' }
-        : { cor: '#047857', fundo: '#ECFDF5', borda: '#A7F3D0' }
+  s >= 500 ? { cor: '#F87171', fundo: '#2A1414', borda: '#5B2323' }
+    : s >= 400 ? { cor: '#FBBF24', fundo: '#2A220E', borda: '#5A4714' }
+      : s >= 300 ? { cor: '#60A5FA', fundo: '#111E33', borda: '#1E3A66' }
+        : { cor: '#34D399', fundo: '#0F2A1F', borda: '#1F5A40' }
 
 const COR_METODO: Record<string, string> = {
-  GET: '#0F766E', POST: '#047857', PUT: '#B45309', PATCH: '#B45309', DELETE: '#B91C1C',
+  GET: '#2DD4BF', POST: '#34D399', PUT: '#FBBF24', PATCH: '#FBBF24', DELETE: '#F87171',
 }
 
 // ── Componentes da página ──────────────────────────────────────────────────
@@ -123,7 +123,7 @@ function Status({ s }: { s: number }) {
 function Duracao({ ms }: { ms: number }) {
   const lenta = ms >= 1000
   return (
-    <span style={{ ...MONO, fontSize: 13, color: lenta ? '#B91C1C' : C.tableText, fontWeight: lenta ? 700 : 400, whiteSpace: 'nowrap' }}>
+    <span style={{ ...MONO, fontSize: 13, color: lenta ? '#F87171' : C.tableText, fontWeight: lenta ? 700 : 400, whiteSpace: 'nowrap' }}>
       {ms >= 1000 ? `${(ms / 1000).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} s` : `${ms} ms`}
     </span>
   )
@@ -240,7 +240,7 @@ export default function RegistrosRequisicoes() {
       {/* O backend não grava consultas comuns (economia de espaço) */}
       <div role="note" style={{
         display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 16, padding: '10px 14px',
-        background: '#F1F7F4', border: `1px solid ${C.tableBorder}`, borderRadius: 10,
+        background: '#16231E', border: `1px solid ${C.tableBorder}`, borderRadius: 10,
         fontSize: 13, lineHeight: 1.5, color: C.tableTextMuted,
       }}>
         <svg width="16" height="16" fill="none" stroke={C.sidebarBg} strokeWidth="2" viewBox="0 0 24 24" aria-hidden style={{ flexShrink: 0, marginTop: 2 }}>
@@ -255,9 +255,9 @@ export default function RegistrosRequisicoes() {
       {/* Resumo */}
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 16 }}>
         <Card flex="1 1 120px" rotulo="Requisições" valor={data?.total ?? 0} />
-        <Card flex="1 1 120px" rotulo="Com sucesso" valor={(classe?.['2xx'] ?? 0) + (classe?.['3xx'] ?? 0)} cor="#047857" />
-        <Card flex="1 1 120px" rotulo="Recusadas (4xx)" valor={classe?.['4xx'] ?? 0} cor="#B45309" />
-        <Card flex="1 1 120px" rotulo="Erros (5xx)" valor={classe?.['5xx'] ?? 0} cor="#B91C1C" />
+        <Card flex="1 1 120px" rotulo="Com sucesso" valor={(classe?.['2xx'] ?? 0) + (classe?.['3xx'] ?? 0)} cor="#34D399" />
+        <Card flex="1 1 120px" rotulo="Recusadas (4xx)" valor={classe?.['4xx'] ?? 0} cor="#FBBF24" />
+        <Card flex="1 1 120px" rotulo="Erros (5xx)" valor={classe?.['5xx'] ?? 0} cor="#F87171" />
         <Card flex="1 1 120px" rotulo="Tempo médio" valor={data?.resumo.duracaoMediaMs ?? 0} sufixo="ms" />
       </div>
 

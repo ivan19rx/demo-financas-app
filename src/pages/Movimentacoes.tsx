@@ -132,7 +132,7 @@ const SUBTITULO: Record<AbaMov, string> = {
 
 // Cor pela direção do dinheiro na empresa: entrada (compra/recebimento) = saiu
 // dinheiro (vermelho); saída (venda) = entrou dinheiro (verde).
-const COR: Record<TipoMovimento, string> = { ENTRADA: '#dc2626', SAIDA: '#16a34a' }
+const COR: Record<TipoMovimento, string> = { ENTRADA: '#F87171', SAIDA: '#4ADE80' }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -308,9 +308,9 @@ function RelatorioButton({ onClick, disabled, label, title, variant = 'solid' }:
       style={{
         display: 'flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap',
         padding: '9px 16px', borderRadius: 8,
-        border: solid ? 'none' : '1px solid #E2EBE7',
-        background: solid ? (disabled ? '#E2EBE7' : C.activeItem) : '#fff',
-        color: disabled ? '#9DB8AD' : solid ? C.navText : '#4B7A6A',
+        border: solid ? 'none' : '1px solid #24352F',
+        background: solid ? (disabled ? '#24352F' : C.activeItem) : '#121D1A',
+        color: disabled ? '#6F8B80' : solid ? C.navText : '#8FB3A4',
         fontSize: 14, fontWeight: 600, cursor: disabled ? 'not-allowed' : 'pointer', alignSelf: 'flex-end',
       }}
     >
@@ -391,7 +391,7 @@ function MovimentoForm({ form, errors, clientes, produtos, transportadoras, serv
 
       <div style={row2}>
         <Field label="Total (calculado)">
-          <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid #E2EBE7', background: '#F9FAFB', fontSize: 14, fontWeight: 700, color: !isNaN(totalCalc) ? '#1A2E25' : '#557063' }}>
+          <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid #24352F', background: '#17241F', fontSize: 14, fontWeight: 700, color: !isNaN(totalCalc) ? '#E4EEE9' : '#93AEA2' }}>
             {!isNaN(totalCalc) ? moeda(totalCalc) : 'Qtd × Preço'}
           </div>
         </Field>
@@ -437,7 +437,7 @@ function MovimentoForm({ form, errors, clientes, produtos, transportadoras, serv
 
       <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end', marginTop: 8 }}>
         <button onClick={onCancel} disabled={submitting}
-          style={{ padding: '8px 18px', borderRadius: 8, border: '1px solid #E2EBE7', background: '#fff', color: '#4B7A6A', fontSize: 14, cursor: 'pointer', fontWeight: 500 }}>
+          style={{ padding: '8px 18px', borderRadius: 8, border: '1px solid #24352F', background: '#121D1A', color: '#8FB3A4', fontSize: 14, cursor: 'pointer', fontWeight: 500 }}>
           Cancelar
         </button>
         <button onClick={onSubmit} disabled={submitting}
@@ -566,7 +566,7 @@ export default function Movimentacoes() {
     }
     if (busca.trim()) partesMeta.push(`Busca: <b>${escHtml(busca.trim())}</b>`)
 
-    const cards: EspelhoCard[] = [{ label: 'Registros', valor: String(resumo.registros), cor: '#1A2E25' }]
+    const cards: EspelhoCard[] = [{ label: 'Registros', valor: String(resumo.registros), cor: '#E4EEE9' }]
     if (aba === 'TODOS') {
       cards.push(
         { label: 'Total Entradas', valor: moeda(resumo.totalEnt), cor: COR.ENTRADA },
@@ -581,14 +581,14 @@ export default function Movimentacoes() {
 
     // Descritores de coluna (rótulo + alinhamento + célula) por aba.
     type ColDef = { label: string; align?: 'left' | 'right' | 'center'; cell: (r: MovimentoView) => EspelhoCelula }
-    const muted = (texto: string): EspelhoCelula => ({ texto, cor: '#557063' })
+    const muted = (texto: string): EspelhoCelula => ({ texto, cor: '#93AEA2' })
     const qtdTxt = (r: MovimentoView) => r.qtd != null ? `${brNum(r.qtd)}${r.unidade ? ' ' + UNIDADE_LABEL[r.unidade] : ''}` : '—'
 
     const colData: ColDef = { label: 'Data', cell: r => muted(formatDate(r.data)) }
     const colCliente: ColDef = { label: 'Cliente/Forn.', cell: r => ({ texto: r.fornecedorClienteNome }) }
     const colProduto: ColDef = { label: 'Produto', cell: r => ({ texto: r.produtoNome }) }
-    const colQtd: ColDef = { label: 'Quantidade', align: 'right', cell: r => ({ texto: qtdTxt(r), cor: '#557063', nowrap: true }) }
-    const colPreco: ColDef = { label: 'Preço', align: 'right', cell: r => ({ texto: r.preco != null ? moeda(r.preco) : '—', cor: '#557063', nowrap: true }) }
+    const colQtd: ColDef = { label: 'Quantidade', align: 'right', cell: r => ({ texto: qtdTxt(r), cor: '#93AEA2', nowrap: true }) }
+    const colPreco: ColDef = { label: 'Preço', align: 'right', cell: r => ({ texto: r.preco != null ? moeda(r.preco) : '—', cor: '#93AEA2', nowrap: true }) }
     const colTotal: ColDef = { label: 'Total', align: 'right', cell: r => ({ texto: `${r.tipo === 'ENTRADA' ? '− ' : '+ '}${moeda(r.total)}`, cor: COR[r.tipo], negrito: true, nowrap: true }) }
     const colDescricao: ColDef = { label: 'Descrição', cell: r => muted(r.descricao ?? '—') }
 
@@ -602,16 +602,16 @@ export default function Movimentacoes() {
     } else if (aba === 'ENTRADA') {
       defs = [
         colData, colCliente, colProduto, colQtd, colPreco, colTotal,
-        { label: 'Balanço', align: 'right', cell: r => ({ texto: moeda(r.saldo), cor: '#16a34a', negrito: true, nowrap: true }) },
+        { label: 'Balanço', align: 'right', cell: r => ({ texto: moeda(r.saldo), cor: '#4ADE80', negrito: true, nowrap: true }) },
         { label: 'Valor Detalhado', cell: r => muted(r.valorDetalhado ?? '—') },
         colDescricao,
       ]
     } else {
       defs = [
         colData, colCliente, colProduto, colQtd, colPreco, colTotal,
-        { label: 'NF', cell: r => ({ texto: r.nf ?? '—', cor: '#557063', nowrap: true }) },
+        { label: 'NF', cell: r => ({ texto: r.nf ?? '—', cor: '#93AEA2', nowrap: true }) },
         { label: 'Motorista', cell: r => muted(r.motorista ?? '—') },
-        { label: 'Veículo', cell: r => ({ texto: r.veiculo ?? '—', cor: '#557063', nowrap: true }) },
+        { label: 'Veículo', cell: r => ({ texto: r.veiculo ?? '—', cor: '#93AEA2', nowrap: true }) },
         { label: 'Transportadora', cell: r => muted(r.transportadora ?? '—') },
         colDescricao,
       ]
@@ -745,7 +745,7 @@ export default function Movimentacoes() {
     ]
     if (aba === 'ENTRADA') {
       cols.push(
-        { key: 'saldo', label: 'Balanço', align: 'right', render: r => <span style={{ fontWeight: 700, whiteSpace: 'nowrap', color: '#16a34a' }}>{moeda(r.saldo)}</span> },
+        { key: 'saldo', label: 'Balanço', align: 'right', render: r => <span style={{ fontWeight: 700, whiteSpace: 'nowrap', color: '#4ADE80' }}>{moeda(r.saldo)}</span> },
         { key: 'valorDetalhado', label: 'Valor Detalhado', render: r => <span style={{ color: C.tableTextMuted }}>{r.valorDetalhado ?? '—'}</span> },
       )
     } else {

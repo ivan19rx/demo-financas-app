@@ -74,7 +74,7 @@ function mapToRow(item: FornecedorCliente): ClienteRow {
 
 function SaldoCell({ valor }: { valor: string }) {
   const num = emCentavos(valor) / 100
-  const color = num > 0 ? '#16a34a' : num < 0 ? '#dc2626' : '#557063'
+  const color = num > 0 ? '#4ADE80' : num < 0 ? '#F87171' : '#93AEA2'
   return <span style={{ fontWeight: 600, color, whiteSpace: 'nowrap' }}>{num > 0 ? '+' : ''}{moeda(num)}</span>
 }
 
@@ -95,24 +95,24 @@ function ResumoSaldos({ receber, pagar }: { receber: number; pagar: number }) {
 
   const linha: React.CSSProperties = {
     display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24,
-    padding: '10px 16px', borderBottom: '1px solid #E2EBE7',
+    padding: '10px 16px', borderBottom: '1px solid #24352F',
   }
   const rotulo: React.CSSProperties = {
-    fontSize: 13, fontWeight: 700, color: '#1A2E25',
+    fontSize: 13, fontWeight: 700, color: '#E4EEE9',
     textTransform: 'uppercase', letterSpacing: '0.03em',
   }
 
   return (
-    <div style={{ maxWidth: 380, marginBottom: 20, border: '1px solid #E2EBE7', borderRadius: 10, overflow: 'hidden', background: '#fff' }}>
+    <div style={{ maxWidth: 380, marginBottom: 20, border: '1px solid #24352F', borderRadius: 10, overflow: 'hidden', background: '#121D1A' }}>
       <div style={linha}>
         <span style={rotulo}>A Pagar</span>
-        <span style={{ fontSize: 14, fontWeight: 700, color: '#dc2626' }}>{moeda(pagar)}</span>
+        <span style={{ fontSize: 14, fontWeight: 700, color: '#F87171' }}>{moeda(pagar)}</span>
       </div>
       <div style={linha}>
         <span style={rotulo}>A Receber</span>
-        <span style={{ fontSize: 14, fontWeight: 700, color: '#16a34a' }}>{moeda(receber)}</span>
+        <span style={{ fontSize: 14, fontWeight: 700, color: '#4ADE80' }}>{moeda(receber)}</span>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24, padding: '11px 16px', background: positivo ? '#7DB93F' : '#dc2626' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24, padding: '11px 16px', background: positivo ? '#7DB93F' : '#F87171' }}>
         <span style={{ ...rotulo, color: '#fff' }}>{positivo ? 'Saldo Positivo' : 'Saldo Negativo'}</span>
         <span style={{ fontSize: 14, fontWeight: 700, color: '#fff' }}>{moeda(saldo)}</span>
       </div>
@@ -185,7 +185,7 @@ function ClienteForm({ form, errors, serverError, submitting, onChange, onSubmit
         <button
           onClick={onCancel}
           disabled={submitting}
-          style={{ padding: '8px 18px', borderRadius: 8, border: '1px solid #E2EBE7', background: '#fff', color: '#4B7A6A', fontSize: 14, cursor: 'pointer', fontWeight: 500 }}
+          style={{ padding: '8px 18px', borderRadius: 8, border: '1px solid #24352F', background: '#121D1A', color: '#8FB3A4', fontSize: 14, cursor: 'pointer', fontWeight: 500 }}
         >
           Cancelar
         </button>

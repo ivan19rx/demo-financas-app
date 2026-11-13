@@ -17,7 +17,7 @@ export function RelatorioModal({ open, onClose, onGerar }: {
 }) {
   return (
     <Modal open={open} title="Gerar relatório (PDF)" onClose={onClose} width={460}>
-      <p style={{ margin: '0 0 16px', fontSize: 14, color: '#557063' }}>
+      <p style={{ margin: '0 0 16px', fontSize: 14, color: '#93AEA2' }}>
         O que você quer incluir no relatório?
       </p>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -27,22 +27,22 @@ export function RelatorioModal({ open, onClose, onGerar }: {
             onClick={() => { onGerar(o.valor); onClose() }}
             style={{
               textAlign: 'left', padding: '14px 16px', borderRadius: 10,
-              border: '1px solid #E2EBE7', background: '#fff', cursor: 'pointer',
+              border: '1px solid #24352F', background: '#121D1A', cursor: 'pointer',
               transition: 'all 0.15s',
             }}
             onMouseEnter={e => {
               const el = e.currentTarget as HTMLElement
               el.style.borderColor = '#7EC8A4'
-              el.style.background = '#F6FAF8'
+              el.style.background = '#1A2A25'
             }}
             onMouseLeave={e => {
               const el = e.currentTarget as HTMLElement
-              el.style.borderColor = '#E2EBE7'
-              el.style.background = '#fff'
+              el.style.borderColor = '#24352F'
+              el.style.background = '#121D1A'
             }}
           >
-            <p style={{ margin: 0, fontSize: 15, fontWeight: 600, color: '#1A2E25' }}>{o.titulo}</p>
-            <p style={{ margin: '4px 0 0', fontSize: 13, color: '#557063' }}>{o.desc}</p>
+            <p style={{ margin: 0, fontSize: 15, fontWeight: 600, color: '#E4EEE9' }}>{o.titulo}</p>
+            <p style={{ margin: '4px 0 0', fontSize: 13, color: '#93AEA2' }}>{o.desc}</p>
           </button>
         ))}
       </div>

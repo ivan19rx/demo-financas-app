@@ -30,14 +30,14 @@ function linhasEspelho(lancamentos: LancamentoItem[]): EspelhoCelula[][] {
     const ent = l.tipo === 'ENTRADA'
     const num = Math.abs(parseFloat(l.valor) || 0)
     return [
-      { texto: formatDate(l.dataLancamento), cor: '#557063' },
+      { texto: formatDate(l.dataLancamento), cor: '#93AEA2' },
       { texto: ent ? '▲ Entrada' : '▼ Saída', badge: ent ? 'entrada' : 'saida' },
-      { texto: `${ent ? '+ ' : '- '}${moeda(num)}`, cor: ent ? '#16a34a' : '#dc2626', negrito: true, nowrap: true },
-      { texto: l.fornecedorCliente?.nome ?? '—', cor: '#557063' },
-      { texto: l.conta?.nome ?? '—', cor: '#557063' },
-      { texto: l.categoria?.nome ?? '—', cor: '#557063' },
-      { texto: l.classificacao || '—', cor: '#557063' },
-      { texto: l.observacao || '—', cor: '#557063' },
+      { texto: `${ent ? '+ ' : '- '}${moeda(num)}`, cor: ent ? '#4ADE80' : '#F87171', negrito: true, nowrap: true },
+      { texto: l.fornecedorCliente?.nome ?? '—', cor: '#93AEA2' },
+      { texto: l.conta?.nome ?? '—', cor: '#93AEA2' },
+      { texto: l.categoria?.nome ?? '—', cor: '#93AEA2' },
+      { texto: l.classificacao || '—', cor: '#93AEA2' },
+      { texto: l.observacao || '—', cor: '#93AEA2' },
     ]
   })
 }
@@ -99,7 +99,7 @@ const FILTROS_INICIAIS: Filtros = {
 // ── Estilos compartilhados ────────────────────────────────────────────────────
 
 const labelStyle: React.CSSProperties = {
-  fontSize: 12, fontWeight: 600, color: '#557063',
+  fontSize: 12, fontWeight: 600, color: '#93AEA2',
   textTransform: 'uppercase', letterSpacing: '0.04em',
 }
 
@@ -168,15 +168,15 @@ function exportarCSV(lancamentos: LancamentoItem[]) {
 function ResumoCards({ resumo }: { resumo: ExtratoResponse['resumo'] }) {
   const saldoNum = resumo.saldoCalculado
   const cards = [
-    { label: 'Registros', value: String(resumo.totalRegistros), color: '#1A2E25' },
-    { label: 'Total Entradas', value: moeda(resumo.totalEntradas), color: '#16a34a' },
-    { label: 'Total Saídas', value: moeda(resumo.totalSaidas), color: '#dc2626' },
-    { label: 'Saldo', value: moeda(saldoNum), color: saldoNum >= 0 ? '#16a34a' : '#dc2626' },
+    { label: 'Registros', value: String(resumo.totalRegistros), color: '#E4EEE9' },
+    { label: 'Total Entradas', value: moeda(resumo.totalEntradas), color: '#4ADE80' },
+    { label: 'Total Saídas', value: moeda(resumo.totalSaidas), color: '#F87171' },
+    { label: 'Saldo', value: moeda(saldoNum), color: saldoNum >= 0 ? '#4ADE80' : '#F87171' },
   ]
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 12, marginBottom: 20 }}>
       {cards.map(card => (
-        <div key={card.label} style={{ background: '#fff', border: '1px solid #E2EBE7', borderRadius: 10, padding: '14px 18px' }}>
+        <div key={card.label} style={{ background: '#121D1A', border: '1px solid #24352F', borderRadius: 10, padding: '14px 18px' }}>
           <p style={{ ...labelStyle, fontSize: 11, letterSpacing: '0.05em', margin: '0 0 6px' }}>{card.label}</p>
           <p style={{ fontSize: 20, fontWeight: 700, color: card.color, margin: 0 }}>{card.value}</p>
         </div>
@@ -198,9 +198,9 @@ function FiltroTabs({ value, onChange }: { value: FiltroTipo; onChange: (v: Filt
         return (
           <button key={tab.value} onClick={() => onChange(active ? '' : tab.value)} style={{
             padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 500, cursor: 'pointer',
-            border: `1px solid ${active ? C.activeIcon : '#E2EBE7'}`,
-            background: active ? C.activeItem : '#fff',
-            color: active ? C.activeIcon : '#557063',
+            border: `1px solid ${active ? C.activeIcon : '#24352F'}`,
+            background: active ? C.activeItem : '#121D1A',
+            color: active ? C.activeIcon : '#93AEA2',
             transition: 'all 0.15s',
           }}>
             {tab.label}
@@ -224,7 +224,7 @@ function SelectFiltro({ label, value, onChange, options, placeholder }: {
       <select
         value={value}
         onChange={e => onChange(e.target.value)}
-        style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E2EBE7', fontSize: 14, color: '#1A2E25', background: '#F9FAFB', cursor: 'pointer', outline: 'none' }}
+        style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #24352F', fontSize: 14, color: '#E4EEE9', background: '#17241F', cursor: 'pointer', outline: 'none' }}
       >
         <option value="">{placeholder}</option>
         {options.map(o => <option key={o.id} value={o.id}>{o.nome}</option>)}
@@ -262,7 +262,7 @@ function BuscaRapida({ value, onChange }: { value: string; onChange: (v: string)
   return (
     <div style={{ position: 'relative', flex: 1, minWidth: 220 }}>
       <svg
-        width="16" height="16" fill="none" stroke="#9DB8AD" strokeWidth="2" viewBox="0 0 24 24"
+        width="16" height="16" fill="none" stroke="#6F8B80" strokeWidth="2" viewBox="0 0 24 24"
         style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
       >
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M19 11a8 8 0 11-16 0 8 8 0 0116 0z" />
@@ -274,8 +274,8 @@ function BuscaRapida({ value, onChange }: { value: string; onChange: (v: string)
         onChange={e => onChange(e.target.value)}
         style={{
           width: '100%', padding: '9px 12px 9px 36px', borderRadius: 8,
-          border: '1px solid #E2EBE7', fontSize: 14, color: '#1A2E25',
-          outline: 'none', boxSizing: 'border-box', background: '#fff',
+          border: '1px solid #24352F', fontSize: 14, color: '#E4EEE9',
+          outline: 'none', boxSizing: 'border-box', background: '#121D1A',
         }}
       />
     </div>
@@ -290,8 +290,8 @@ function ExportButton({ onClick, disabled }: { onClick: () => void; disabled: bo
       title="Exportar lançamentos exibidos para CSV"
       style={{
         display: 'flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap',
-        padding: '9px 16px', borderRadius: 8, border: '1px solid #E2EBE7',
-        background: '#fff', color: disabled ? '#9DB8AD' : '#4B7A6A',
+        padding: '9px 16px', borderRadius: 8, border: '1px solid #24352F',
+        background: '#121D1A', color: disabled ? '#6F8B80' : '#8FB3A4',
         fontSize: 14, fontWeight: 600, cursor: disabled ? 'not-allowed' : 'pointer',
       }}
     >
@@ -315,9 +315,9 @@ function RelatorioButton({ onClick, disabled, label, title, variant = 'solid' }:
       style={{
         display: 'flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap',
         padding: '9px 16px', borderRadius: 8,
-        border: solid ? 'none' : '1px solid #E2EBE7',
-        background: solid ? (disabled ? '#E2EBE7' : C.activeItem) : '#fff',
-        color: disabled ? '#9DB8AD' : solid ? C.navText : '#4B7A6A',
+        border: solid ? 'none' : '1px solid #24352F',
+        background: solid ? (disabled ? '#24352F' : C.activeItem) : '#121D1A',
+        color: disabled ? '#6F8B80' : solid ? C.navText : '#8FB3A4',
         fontSize: 14, fontWeight: 600, cursor: disabled ? 'not-allowed' : 'pointer',
       }}
     >
@@ -450,10 +450,10 @@ export default function ExtratoCliente() {
       subtitulo: 'Filtre lançamentos por cliente, conta, categoria e tipo',
       meta: metaEspelho(),
       cards: [
-        { label: 'Registros', valor: String(resumoExibido.totalRegistros), cor: '#1A2E25' },
-        { label: 'Total Entradas', valor: moeda(resumoExibido.totalEntradas), cor: '#16a34a' },
-        { label: 'Total Saídas', valor: moeda(resumoExibido.totalSaidas), cor: '#dc2626' },
-        { label: 'Saldo', valor: moeda(saldoNum), cor: saldoNum >= 0 ? '#16a34a' : '#dc2626' },
+        { label: 'Registros', valor: String(resumoExibido.totalRegistros), cor: '#E4EEE9' },
+        { label: 'Total Entradas', valor: moeda(resumoExibido.totalEntradas), cor: '#4ADE80' },
+        { label: 'Total Saídas', valor: moeda(resumoExibido.totalSaidas), cor: '#F87171' },
+        { label: 'Saldo', valor: moeda(saldoNum), cor: saldoNum >= 0 ? '#4ADE80' : '#F87171' },
       ],
       colunas: COLUNAS_ESPELHO,
       linhas: linhasEspelho(lancamentosExibidos),
@@ -478,7 +478,7 @@ export default function ExtratoCliente() {
     <PageWrapper title="Extrato" subtitle="Filtre lançamentos por cliente, conta, categoria e tipo">
 
       {/* Painel de filtros */}
-      <div style={{ background: '#fff', border: '1px solid #E2EBE7', borderRadius: 12, padding: '20px', marginBottom: 20 }}>
+      <div style={{ background: '#121D1A', border: '1px solid #24352F', borderRadius: 12, padding: '20px', marginBottom: 20 }}>
         <p style={{ ...labelStyle, fontSize: 12, letterSpacing: '0.05em', margin: '0 0 14px' }}>Filtros</p>
 
         {/* Selects */}
@@ -502,7 +502,7 @@ export default function ExtratoCliente() {
           </div>
 
           <div style={{ display: 'flex', gap: 8 }}>
-            <button onClick={limpar} style={{ padding: '8px 16px', borderRadius: 8, border: '1px solid #E2EBE7', background: '#fff', color: '#557063', fontSize: 14, fontWeight: 500, cursor: 'pointer' }}>
+            <button onClick={limpar} style={{ padding: '8px 16px', borderRadius: 8, border: '1px solid #24352F', background: '#121D1A', color: '#93AEA2', fontSize: 14, fontWeight: 500, cursor: 'pointer' }}>
               Limpar
             </button>
             <button

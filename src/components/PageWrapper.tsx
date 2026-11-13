@@ -10,8 +10,8 @@ export function PageWrapper({ title, subtitle, action, children }: PageWrapperPr
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: 20 }}>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
         <div>
-          <h1 style={{ fontSize: 22, fontWeight: 600, color: '#1A2E25', margin: 0 }}>{title}</h1>
-          {subtitle && <p style={{ fontSize: 14, color: '#557063', margin: '4px 0 0' }}>{subtitle}</p>}
+          <h1 style={{ fontSize: 22, fontWeight: 600, color: '#E4EEE9', margin: 0 }}>{title}</h1>
+          {subtitle && <p style={{ fontSize: 14, color: '#93AEA2', margin: '4px 0 0' }}>{subtitle}</p>}
         </div>
         {action && <div style={{ flexShrink: 0 }}>{action}</div>}
       </div>

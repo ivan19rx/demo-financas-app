@@ -94,7 +94,7 @@ export function Modal({ open, title, onClose, children, width = 480 }: ModalProp
         aria-labelledby={titleId}
         tabIndex={-1}
         style={{
-          background: '#fff',
+          background: '#121D1A',
           borderRadius: 14,
           width: '100%',
           maxWidth: width,
@@ -111,9 +111,9 @@ export function Modal({ open, title, onClose, children, width = 480 }: ModalProp
         }}
       >
         {/* Header (fixo no topo) */}
-        <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 24px', borderBottom: '1px solid #E2EBE7' }}>
-          <h2 id={titleId} style={{ margin: 0, fontSize: 16, fontWeight: 600, color: '#1A2E25' }}>{title}</h2>
-          <button onClick={onClose} aria-label="Fechar" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#557063', padding: 4, borderRadius: 6, display: 'flex', alignItems: 'center' }}>
+        <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 24px', borderBottom: '1px solid #24352F' }}>
+          <h2 id={titleId} style={{ margin: 0, fontSize: 16, fontWeight: 600, color: '#E4EEE9' }}>{title}</h2>
+          <button onClick={onClose} aria-label="Fechar" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#93AEA2', padding: 4, borderRadius: 6, display: 'flex', alignItems: 'center' }}>
             <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -133,9 +133,9 @@ export function Modal({ open, title, onClose, children, width = 480 }: ModalProp
 export function FormError({ message }: { message: string | null }) {
   if (!message) return null
   return (
-    <div role="alert" style={{ background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 8, padding: '10px 14px', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <div role="alert" style={{ background: '#2A1414', border: '1px solid #5B2323', borderRadius: 8, padding: '10px 14px', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 8 }}>
       <span style={{ fontSize: 16 }}>⚠️</span>
-      <span style={{ color: '#DC2626', fontSize: 13, fontWeight: 500 }}>{message}</span>
+      <span style={{ color: '#F87171', fontSize: 13, fontWeight: 500 }}>{message}</span>
     </div>
   )
 }
@@ -157,14 +157,14 @@ interface ConfirmDialogProps {
 export function ConfirmDialog({ open, title, message, confirmLabel = 'Confirmar', onConfirm, onCancel, loading, error }: ConfirmDialogProps) {
   return (
     <Modal open={open} title={title} onClose={onCancel} width={400}>
-      <p style={{ margin: '0 0 24px', fontSize: 14, color: '#4B7A6A', lineHeight: 1.6 }}>{message}</p>
+      <p style={{ margin: '0 0 24px', fontSize: 14, color: '#8FB3A4', lineHeight: 1.6 }}>{message}</p>
       {error && (
-        <p role="alert" style={{ margin: '-12px 0 20px', padding: '10px 12px', borderRadius: 8, fontSize: 13, lineHeight: 1.5, color: '#B91C1C', background: '#FEF2F2', border: '1px solid #FECACA' }}>
+        <p role="alert" style={{ margin: '-12px 0 20px', padding: '10px 12px', borderRadius: 8, fontSize: 13, lineHeight: 1.5, color: '#F87171', background: '#2A1414', border: '1px solid #5B2323' }}>
           {error}
         </p>
       )}
       <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
-        <button onClick={onCancel} disabled={loading} style={{ padding: '8px 18px', borderRadius: 8, border: '1px solid #E2EBE7', background: '#fff', color: '#4B7A6A', fontSize: 14, cursor: 'pointer', fontWeight: 500 }}>
+        <button onClick={onCancel} disabled={loading} style={{ padding: '8px 18px', borderRadius: 8, border: '1px solid #24352F', background: '#121D1A', color: '#8FB3A4', fontSize: 14, cursor: 'pointer', fontWeight: 500 }}>
           Cancelar
         </button>
         <button onClick={onConfirm} disabled={loading} style={{ padding: '8px 18px', borderRadius: 8, border: 'none', background: '#DC2626', color: '#fff', fontSize: 14, cursor: loading ? 'not-allowed' : 'pointer', fontWeight: 500, opacity: loading ? 0.7 : 1 }}>
@@ -186,9 +186,9 @@ interface FieldProps {
 export function Field({ label, error, children }: FieldProps) {
   return (
     <div style={{ marginBottom: 16 }}>
-      <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#1A2E25', marginBottom: 6 }}>{label}</label>
+      <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#E4EEE9', marginBottom: 6 }}>{label}</label>
       {children}
-      {error && <p style={{ margin: '4px 0 0', fontSize: 12, color: '#DC2626' }}>{error}</p>}
+      {error && <p style={{ margin: '4px 0 0', fontSize: 12, color: '#F87171' }}>{error}</p>}
     </div>
   )
 }
@@ -197,12 +197,12 @@ const inputStyle: React.CSSProperties = {
   width: '100%',
   padding: '9px 12px',
   borderRadius: 8,
-  border: '1px solid #E2EBE7',
+  border: '1px solid #24352F',
   fontSize: 14,
-  color: '#1A2E25',
+  color: '#E4EEE9',
   outline: 'none',
   boxSizing: 'border-box',
-  background: '#F9FAFB',
+  background: '#17241F',
   transition: 'border-color 0.15s',
 }
 
@@ -213,9 +213,9 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 export function Input({ error, ...props }: InputProps) {
   return (
     <input
-      style={{ ...inputStyle, borderColor: error ? '#DC2626' : '#E2EBE7' }}
+      style={{ ...inputStyle, borderColor: error ? '#DC2626' : '#24352F' }}
       onFocus={e => (e.currentTarget.style.borderColor = C.activeIcon)}
-      onBlur={e => (e.currentTarget.style.borderColor = error ? '#DC2626' : '#E2EBE7')}
+      onBlur={e => (e.currentTarget.style.borderColor = error ? '#F87171' : '#24352F')}
       {...props}
     />
   )
@@ -226,7 +226,7 @@ export function Select({ children, ...props }: React.SelectHTMLAttributes<HTMLSe
     <select
       style={{ ...inputStyle, cursor: 'pointer', appearance: 'auto' }}
       onFocus={e => (e.currentTarget.style.borderColor = C.activeIcon)}
-      onBlur={e => (e.currentTarget.style.borderColor = '#E2EBE7')}
+      onBlur={e => (e.currentTarget.style.borderColor = '#24352F')}
       {...props}
     >
       {children}
